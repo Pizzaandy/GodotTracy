@@ -5,7 +5,7 @@ Import("env_modules")
 
 env_tracy = env_modules.Clone()
 
-tracy_dir = "./tracy/"
+tracy_dir = "./tracy/public/"
 
 tracy_src = [
     "TracyClient.cpp",
@@ -13,11 +13,7 @@ tracy_src = [
 
 tracy_sources = [tracy_dir + file for file in tracy_src]
 
-# Treat headers as system headers to avoid raising warnings. Not supported on MSVC.
-if not env.msvc:
-    env_tracy.Append(CPPFLAGS=["-isystem", Dir(tracy_dir).path])
-else:
-    env_tracy.Prepend(CPPPATH=[tracy_dir])
+env_tracy.Prepend(CPPPATH=[tracy_dir])
 
 env_tracy.disable_warnings()
 
